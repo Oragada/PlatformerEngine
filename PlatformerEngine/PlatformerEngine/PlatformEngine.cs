@@ -8,19 +8,24 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using PlatformerEngine.Components;
 
 namespace PlatformerEngine
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class PlatformEngine : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        protected ComponentManager cm;
+        protected GraphicsDeviceManager graphics;
+        protected SpriteBatch spriteBatch;
+        public const float SCALE = 1.0f;
+        public const int GRAVITY = 920;
 
-        public Game1()
+        public PlatformEngine()
         {
+            IsMouseVisible = false;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -33,8 +38,6 @@ namespace PlatformerEngine
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -44,10 +47,10 @@ namespace PlatformerEngine
         /// </summary>
         protected override void LoadContent()
         {
+            cm = new ComponentManager(GraphicsDevice);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -56,7 +59,6 @@ namespace PlatformerEngine
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -66,11 +68,17 @@ namespace PlatformerEngine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            cm.Update(gameTime);
+            spriteBatch.Begin();
+            cm.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
+
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -81,9 +89,6 @@ namespace PlatformerEngine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

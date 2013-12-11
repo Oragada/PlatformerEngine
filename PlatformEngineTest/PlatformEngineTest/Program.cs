@@ -1,6 +1,6 @@
 using System;
 
-namespace PlatformerEngine
+namespace PlatformEngineTest
 {
 #if WINDOWS || XBOX
     static class Program
@@ -10,7 +10,7 @@ namespace PlatformerEngine
         /// </summary>
         static void Main(string[] args)
         {
-            using (PlatformEngine game = new PlatformEngine())
+            using (PlatformTest game = new PlatformTest())
             {
                 game.Run();
             }
